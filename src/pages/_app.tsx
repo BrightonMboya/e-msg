@@ -9,7 +9,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "~/styles/globals.css";
 
 import { Montserrat } from "next/font/google";
-import Layout from "~/components/Layout.tsx";
+import Layout from "~/components/Layout";
 
 const monsterrat = Montserrat({
   subsets: ["latin"],
@@ -35,11 +35,11 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         },
       }}
     >
-        <main className={`${monsterrat.className}`}>
-      <Layout>
+      <main className={`${monsterrat.className}`}>
+        <Layout>
           <Component {...pageProps} />
-      </Layout>
-        </main>
+        </Layout>
+      </main>
     </ClerkProvider>
   );
 };

@@ -9,7 +9,7 @@ const CANT_MUTATE_ERRORS = new TRPCError({
   message: "Failed to perform this operation",
 });
 
-const NOT_FOUND = new TRPCError({
+export const NOT_FOUND = new TRPCError({
   code: "NOT_FOUND",
   message: "Failed to Fetch",
 });

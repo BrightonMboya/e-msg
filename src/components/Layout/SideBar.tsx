@@ -11,7 +11,7 @@ export default function SideBar() {
   const { signOut } = useClerk();
 
   return (
-    <section className="bg-lightest fixed min-h-screen">
+    <section className="fixed min-h-screen bg-lightest">
       <div className="spac flex w-[250px] flex-col  justify-start px-5 pt-5 ">
         <UserButton
           appearance={{
@@ -48,6 +48,22 @@ export default function SideBar() {
             <Send width={20} height={20} />
 
             <h3>Send Messages</h3>
+          </div>
+        </Link>
+
+        <Link href="/contacts" className="mt-5">
+          <div
+            className={`flex space-x-2
+              ${
+                router.pathname.startsWith("/contacts")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <PersonIcon width={20} height={20} />
+
+            <h3>Contacts</h3>
           </div>
         </Link>
 

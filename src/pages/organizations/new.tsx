@@ -2,16 +2,11 @@ import React, { type ReactElement } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AppRouter } from "~/server/api/root";
-import { inferProcedureInput } from "@trpc/server";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { api } from "~/utils/api";
 import Button from "~/components/ui/Button";
 import Input from "~/components/ui/Input";
-import { Textarea } from "~/components/ui/TextArea";
-import { ToastAction } from "~/components/ui/Toast";
 import { Toaster } from "~/components/ui/toaster";
 import { useToast } from "~/utils/hooks/useToast";
 
@@ -19,6 +14,7 @@ export const organizationSchema = z.object({
   name: z.string(),
   phoneNumber: z.string(),
   messageBalance: z.number(),
+  email: z.string(),
 });
 
 export type ValidationSchema = z.infer<typeof organizationSchema>;
@@ -92,6 +88,11 @@ export default function Page() {
         <ItemLayout>
           <AssetLabel label="Phone Number" />
           <Input placeholder="+260 780348912" {...register("phoneNumber")} />
+        </ItemLayout>
+
+        <ItemLayout>
+          <AssetLabel label="Email" />
+          <Input placeholder="joe@gmail.com" {...register("email")} />
         </ItemLayout>
 
         <ItemLayout>
