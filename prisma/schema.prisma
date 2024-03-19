@@ -8,6 +8,7 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
 }
 
 model Organizations {
@@ -16,6 +17,7 @@ model Organizations {
     phoneNumber    String
     messageBalance Int        @default(0)
     messages       Messages[]
+    contacts       Contacts[]
 }
 
 model Messages {
@@ -23,6 +25,14 @@ model Messages {
     createdAt       DateTime      @default(now())
     body            String
     to              String
+    Organizations   Organizations @relation(fields: [organizationsId], references: [id])
+    organizationsId String
+}
+
+model Contacts {
+    id              String        @id @default(cuid())
+    fullName        String
+    phoneNumber     String
     Organizations   Organizations @relation(fields: [organizationsId], references: [id])
     organizationsId String
 }
