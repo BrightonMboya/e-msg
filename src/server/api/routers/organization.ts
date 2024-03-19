@@ -36,4 +36,8 @@ export const organization = createTRPCRouter({
       throw NOT_FOUND;
     }
   }),
+
+  all: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.organizations.findMany();
+  }),
 });
