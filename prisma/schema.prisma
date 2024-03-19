@@ -10,11 +10,19 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Organizations {
+    id             String     @id @default(cuid())
+    name           String
+    phoneNumber    String
+    messageBalance Int        @default(0)
+    messages       Messages[]
+}
 
-    @@index([name])
+model Messages {
+    id              String        @id @default(cuid())
+    createdAt       DateTime      @default(now())
+    body            String
+    to              String
+    Organizations   Organizations @relation(fields: [organizationsId], references: [id])
+    organizationsId String
 }

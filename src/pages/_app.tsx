@@ -1,19 +1,46 @@
 import { type AppType } from "next/app";
-import { Inter } from "next/font/google";
+import type { NextPage } from "next";
+import type { AppProps } from "next/app";
 
 import { api } from "~/utils/api";
+import type { ReactElement, ReactNode } from "react";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import "~/styles/globals.css";
 
-const inter = Inter({
+import { Montserrat } from "next/font/google";
+import Layout from "~/components/Layout.tsx";
+
+const monsterrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-montserrat",
 });
-const MyApp: AppType = ({ Component, pageProps }) => {
+
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? ((page) => page);
   return (
-    <main className={`font-sans ${inter.variable}`}>
-      <Component {...pageProps} />
-    </main>
+    <ClerkProvider
+      {...pageProps}
+      appearance={{
+        variables: {
+          colorPrimary: "#a87133",
+        },
+      }}
+    >
+        <main className={`${monsterrat.className}`}>
+      <Layout>
+          <Component {...pageProps} />
+      </Layout>
+        </main>
+    </ClerkProvider>
   );
 };
 
