@@ -19,13 +19,14 @@ export default function Page() {
         link="/contacts/new"
         title="New Contacts"
       />
-
-      <NoAsset
-        bigTitle="You haven't added your Contacts yet"
-        smallTitle="It's easier to manage, your contacts. Go ahead and them now"
-        c2a="Add Contacts"
-        c2aUrl="/contacts/new"
-      />
+      {data?.length === 0 && isLoading && (
+        <NoAsset
+          bigTitle="You haven't added your Contacts yet"
+          smallTitle="It's easier to manage, your contacts. Go ahead and them now"
+          c2a="Add Contacts"
+          c2aUrl="/contacts/new"
+        />
+      )}
 
       {/* @ts-ignore */}
       {data!?.length > 0 && <ContactsTable data={data} />}

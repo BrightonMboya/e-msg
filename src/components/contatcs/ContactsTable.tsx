@@ -148,7 +148,7 @@ export default function ContactsTable({ data }: { data: Contacts[] }) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Farmers..."
+          placeholder="Filter Contacts..."
           value={
             (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
           }

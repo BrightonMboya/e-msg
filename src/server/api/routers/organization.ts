@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { organizationSchema } from "~/pages/organizations/new";
 import z from "zod";
 
-const CANT_MUTATE_ERRORS = new TRPCError({
+export const CANT_MUTATE_ERRORS = new TRPCError({
   code: "NOT_FOUND",
   message: "Failed to perform this operation",
 });
