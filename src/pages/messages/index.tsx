@@ -1,3 +1,15 @@
+import Header from "~/components/Layout/Header";
+import { useUser } from "@clerk/nextjs";
+
 export default function Page() {
-  return <h3>Send Messages</h3>;
+  const { user } = useUser();
+  return (
+    <main className="pl-5">
+      <Header
+        caption={user?.username as unknown as string}
+        link="/messages/new"
+        title="Send New Message"
+      />
+    </main>
+  );
 }

@@ -68,7 +68,7 @@ export default function SideBar() {
         </Link>
 
         <Button
-          className="fixed bottom-10 ml-10 w-[150px] space-x-2"
+          className="fixed bottom-10 w-[150px] space-x-2"
           variant="destructive"
           onClick={() => signOut(() => router.push("/auth/login"))}
         >
