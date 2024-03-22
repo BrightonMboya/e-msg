@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Button from "../ui/Button";
 import { UserButton, useClerk } from "@clerk/nextjs";
 
-import { Send, LogOutIcon } from "lucide-react";
+import { Send, LogOutIcon, CreditCard } from "lucide-react";
 
 export default function SideBar() {
   const router = useRouter();
@@ -64,6 +64,21 @@ export default function SideBar() {
             <PersonIcon width={20} height={20} />
 
             <h3>Contacts</h3>
+          </div>
+        </Link>
+
+        <Link href="/payments" className="mt-5">
+          <div
+            className={`flex space-x-2
+              ${
+                router.pathname.startsWith("/payments")
+                  ? "text-dark"
+                  : "text-gray-500"
+              }
+          `}
+          >
+            <CreditCard />
+            <h3>Payments</h3>
           </div>
         </Link>
 

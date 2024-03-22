@@ -28,6 +28,27 @@ export const organization = createTRPCRouter({
       }
     }),
 
+  editOrganization: protectedProcedure
+    .input(organizationSchema.merge(z.object({ organizationId: z.string() })))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return await ctx.db.organizations.update({
+          where: {
+            id: input.organizationId,
+          },
+          data: {
+            name: input.name,
+            email: input.email,
+            phoneNumber: input.phoneNumber,
+            messageBalance: input.messageBalance,
+          },
+        });
+      } catch (cause) {
+        console.log(cause);
+        throw CANT_MUTATE_ERRORS;
+      }
+    }),
+
   fetchByOrganization: protectedProcedure.query(async ({ ctx, input }) => {
     try {
       return await ctx.db.organizations.findMany();
@@ -40,4 +61,25 @@ export const organization = createTRPCRouter({
   all: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.organizations.findMany();
   }),
+
+  fetchById: protectedProcedure
+    .input(
+      z.object({
+        organizationId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        return await ctx.db.organizations.findUnique({
+          where: {
+            id: input.organizationId,
+          },
+        });
+      } catch (cause) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Organization not found",
+        });
+      }
+    }),
 });

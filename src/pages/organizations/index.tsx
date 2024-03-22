@@ -4,11 +4,13 @@ import { api } from "~/utils/api";
 import OrganizationTable from "~/components/organization/OrganizationTable";
 import NoAsset from "~/components/Layout/NoAsset";
 import Header from "~/components/Layout/Header";
+import LoadingSkeleton from "~/components/ui/LoadingSkeleton";
+
 
 export default function Page() {
   const { user } = useUser();
-  const { data, isLoading } = api.organization.all.useQuery();
-
+  const { data, isPending } = api.organization.all.useQuery();
+ 
   return (
     <main className="pl-5">
       <Header
@@ -16,7 +18,8 @@ export default function Page() {
         link="/organizations/new"
         title="New Organization"
       />
-      {data?.length === 0 && isLoading && (
+      {isPending && <LoadingSkeleton />}
+      {data?.length === 0 && isPending && (
         <NoAsset
           bigTitle="You haven't added your Contacts yet"
           smallTitle="It's easier to manage, your contacts. Go ahead and them now"

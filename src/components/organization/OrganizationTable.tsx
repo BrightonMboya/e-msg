@@ -105,7 +105,7 @@ export const columns: ColumnDef<Organization>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const contact = row.original;
+      const organization = row.original;
 
       return (
         <DropdownMenu>
@@ -115,11 +115,17 @@ export const columns: ColumnDef<Organization>[] = [
               <DotsHorizontalIcon className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="font-montserrat bg-white">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View Details</DropdownMenuItem>
+            <Link href={{
+              pathname: "/organizations/edit",
+              query: {organizationId: organization.id}
+            }}>
+            
+            <DropdownMenuItem>Edit Organization</DropdownMenuItem>
+            </Link>
             {/* <DropdownMenuItem>
               <Link href={`/contacts/edit/${contact.id}`}>Edit Contact</Link>
             </DropdownMenuItem> */}
@@ -163,9 +169,7 @@ export default function OrganizationTable({ data }: { data: Organization[] }) {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Organization..."
-          value={
-            (table.getColumn("name")?.getFilterValue() as string) ?? ""
-          }
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
