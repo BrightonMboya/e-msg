@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import ContactsTable from "~/components/contatcs/ContactsTable";
 import NoAsset from "~/components/Layout/NoAsset";
 import Header from "~/components/Layout/Header";
+import LoadingSkeleton from "~/components/ui/LoadingSkeleton";
 
 export default function Page() {
   const { user } = useUser();
@@ -27,6 +28,7 @@ export default function Page() {
           c2aUrl="/contacts/new"
         />
       )}
+      {isLoading && <LoadingSkeleton />}
 
       {/* @ts-ignore */}
       {data!?.length > 0 && <ContactsTable data={data} />}

@@ -11,7 +11,7 @@ export default function Page() {
   const { user } = useUser();
   const { toast } = useToast();
   const [messages, setMessages] = useState("");
-  const { mutateAsync } = api.messages.sendMessage.useMutation({
+  const { mutateAsync, isPending } = api.messages.sendMessage.useMutation({
     onSuccess: () => {
       toast({
         description: "Message Sent Succesfully",
@@ -28,14 +28,14 @@ export default function Page() {
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutateAsync({ message: messages });
-    setMessages("")
+    setMessages("");
   };
   return (
     <main className="pl-5">
       <Toaster />
       <Header
         caption={user?.username as unknown as string}
-        link="/messages/new"
+        link="/messages/"
         title="View All Messages"
       />
       <h3 className="text-xl font-medium">Sending New Message</h3>
@@ -47,7 +47,9 @@ export default function Page() {
             setMessages(e.target.value);
           }}
         />
-        <Button className="mt-5">Send Message</Button>
+        <Button className="mt-5 disabled:cursor-disabled" disabled={isPending || messages.length === 0}>
+          Send Message
+        </Button>
       </form>
     </main>
   );

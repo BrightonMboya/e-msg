@@ -19,6 +19,7 @@ model Organizations {
     messageBalance Int        @default(0)
     messages       Messages[]
     contacts       Contacts[]
+    Payments       Payments[]
 }
 
 model Messages {
@@ -36,4 +37,12 @@ model Contacts {
     phoneNumber     String
     Organizations   Organizations @relation(fields: [organizationsId], references: [id])
     organizationsId String
+}
+
+model Payments {
+    id             String        @id @default(cuid())
+    createdAt      DateTime      @default(now())
+    amount         Int
+    Organizations  Organizations @relation(fields: [organizationId], references: [id])
+    organizationId String
 }

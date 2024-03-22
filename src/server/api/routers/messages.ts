@@ -20,7 +20,7 @@ export const messages = createTRPCRouter({
         // Initialize the SDK
         const AfricasTalking = require("africastalking")(credentials);
         const options = {
-          to: "+255758670017",
+          to: "+255788323254",
           message: input.message,
           from: "Shamba Data",
         };
