@@ -18,7 +18,7 @@ import { ItemLayout } from "~/components/ui/ItemLayout";
 import { AssetLabel } from "~/components/ui/ItemLayout";
 
 export const contactsSchema = z.object({
-  fullName: z.string(),
+  // fullName: z.string(),
   phoneNumber: z.string(),
 });
 
@@ -80,10 +80,10 @@ export default function Page() {
         className="relative mt-[50px] flex flex-col space-y-[30px] "
         onSubmit={handleSubmit(onSubmit)}
       >
-        <ItemLayout>
+        {/* <ItemLayout>
           <AssetLabel label="Full Name" />
           <Input placeholder="John Doe" {...register("fullName")} />
-        </ItemLayout>
+        </ItemLayout> */}
 
         <ItemLayout>
           <AssetLabel label="Phone Number" />

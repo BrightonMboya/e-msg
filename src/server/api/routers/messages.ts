@@ -1,6 +1,21 @@
 import z from "zod";
 import { protectedProcedure, createTRPCRouter } from "../trpc";
 
+interface Recipients {
+  statusCode: string;
+  number: string;
+  status: string;
+  cost: string;
+  messageId: string;
+}
+interface smsMessageData {
+  message: string;
+  Recipients: Array<Recipients>;
+}
+interface AfricasTalkingResponse {
+  smsMessageData: smsMessageData;
+}
+
 export const messages = createTRPCRouter({
   sendMessage: protectedProcedure
     .input(
@@ -28,7 +43,14 @@ export const messages = createTRPCRouter({
         const sms = AfricasTalking.SMS;
 
         const res = await sms.send({ ...options });
+
+        // processing the res from the api
+        const correctStatusCode = ["100", "101", "102"];
+        if (res.SMSMessageData.Recipients.status in correctStatusCode) {
+          console.log("Yes Honey");
+        }
         console.log(res);
+        console.log(res.SMSMessageData.Recipients);
       } catch (cause) {
         console.log(cause);
       }

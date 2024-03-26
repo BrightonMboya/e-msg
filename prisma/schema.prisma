@@ -33,7 +33,6 @@ model Messages {
 
 model Contacts {
     id              String        @id @default(cuid())
-    fullName        String
     phoneNumber     String
     Organizations   Organizations @relation(fields: [organizationsId], references: [id])
     organizationsId String

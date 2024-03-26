@@ -11,6 +11,7 @@ export default function Page() {
   const { user } = useUser();
   const { toast } = useToast();
   const [messages, setMessages] = useState("");
+  const [charactersCount, setCharactersCount] = useState(0);
   const { mutateAsync, isPending } = api.messages.sendMessage.useMutation({
     onSuccess: () => {
       toast({
@@ -39,15 +40,19 @@ export default function Page() {
         title="View All Messages"
       />
       <h3 className="text-xl font-medium">Sending New Message</h3>
+      <p>{`Messages Available: `}</p>
+      <p>{`Message characters Limit ${charactersCount}/160`}</p>
       <form onSubmit={onSubmit}>
         <Textarea
           className="mt-5 max-w-xl"
           rows={10}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
             setMessages(e.target.value);
+            setCharactersCount(messages.length)
           }}
+          disabled={charactersCount >= 160}
         />
-        <Button className="mt-5 disabled:cursor-disabled" disabled={isPending || messages.length === 0}>
+        <Button className="mt-5 disabled:cursor-disabled" disabled={isPending || messages.length === 0 || charactersCount >= 160}>
           Send Message
         </Button>
       </form>
