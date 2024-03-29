@@ -17,6 +17,7 @@ model Organizations {
     phoneNumber    String
     email          String     @unique
     messageBalance Int        @default(0)
+    alphaNumerics  String 
     messages       Messages[]
     contacts       Contacts[]
     Payments       Payments[]

@@ -1,12 +1,8 @@
 import { useRouter } from "next/router";
 import LoadingSkeleton from "~/components/ui/LoadingSkeleton";
 import { api } from "~/utils/api";
-import {
-  AssetLabel,
-  ItemLayout,
-  organizationSchema,
-  type ValidationSchema,
-} from "./new";
+import { organizationSchema, type ValidationSchema } from "./new";
+import { AssetLabel, ItemLayout } from "~/components/ui/ItemLayout";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -44,6 +40,7 @@ export default function Page() {
     if (data) {
       setValue("email", data?.email);
       setValue("name", data?.name);
+      setValue("alphaNumerics", data?.alphaNumerics);
       setValue("messageBalance", data?.messageBalance);
       setValue("phoneNumber", data?.phoneNumber);
     }
@@ -70,6 +67,11 @@ export default function Page() {
             </ItemLayout>
 
             <ItemLayout>
+              <AssetLabel label="Alphanumeric" />
+              <Input placeholder="BarberShop" {...register("alphaNumerics")} />
+            </ItemLayout>
+
+            <ItemLayout>
               <AssetLabel label="Email" />
               <Input {...register("email")} />
             </ItemLayout>
@@ -81,11 +83,16 @@ export default function Page() {
 
             <ItemLayout>
               <AssetLabel label="Message Balance" />
-              <Input {...register("messageBalance", {valueAsNumber: true})} type="number" />
+              <Input
+                {...register("messageBalance", { valueAsNumber: true })}
+                type="number"
+              />
             </ItemLayout>
           </section>
 
-          <Button disabled={isPending} className="mt-5">Edit Changes</Button>
+          <Button disabled={isPending} className="mt-5">
+            Edit Changes
+          </Button>
         </form>
       )}
     </main>

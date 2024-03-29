@@ -9,36 +9,17 @@ import Button from "~/components/ui/Button";
 import Input from "~/components/ui/Input";
 import { Toaster } from "~/components/ui/toaster";
 import { useToast } from "~/utils/hooks/useToast";
+import { AssetLabel, ItemLayout } from "~/components/ui/ItemLayout";
 
 export const organizationSchema = z.object({
   name: z.string(),
   phoneNumber: z.string(),
   messageBalance: z.number(),
   email: z.string(),
+  alphaNumerics: z.string().min(1),
 });
 
 export type ValidationSchema = z.infer<typeof organizationSchema>;
-
-export function AssetLabel({
-  label,
-  caption,
-}: {
-  label: string;
-  caption?: string;
-}) {
-  return (
-    <div className="max-w-[400px] ">
-      <h3 className="text-base font-medium">{label}</h3>
-      <h3 className="text-sm">{caption}</h3>
-    </div>
-  );
-}
-
-export function ItemLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="grid grid-cols-2 items-center gap-[50px]">{children}</div>
-  );
-}
 
 export default function Page() {
   const router = useRouter();
@@ -83,6 +64,11 @@ export default function Page() {
         <ItemLayout>
           <AssetLabel label="Organization Name" />
           <Input placeholder="Jay Barber Shop" {...register("name")} />
+        </ItemLayout>
+
+        <ItemLayout>
+          <AssetLabel label="Alphanumeric" />
+          <Input placeholder="Barbershop" {...register("alphaNumerics")} />
         </ItemLayout>
 
         <ItemLayout>
