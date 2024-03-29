@@ -65,7 +65,6 @@ export default function Page() {
       <h3 className="text-xl font-medium">Sending New Message</h3>
       <p>{`Messages Available: `}</p>
       <p>{`Message characters Limit ${charactersCount}/160`}</p>
-
       <Controller
         control={control}
         name="alphanumeric"
