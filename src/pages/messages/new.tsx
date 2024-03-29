@@ -28,7 +28,11 @@ export default function Page() {
 
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutateAsync({ message: messages });
+    mutateAsync({
+      message: messages,
+      organizationEmail: user?.primaryEmailAddress
+        ?.emailAddress as unknown as string,
+    });
     setMessages("");
   };
   return (
@@ -48,11 +52,16 @@ export default function Page() {
           rows={10}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
             setMessages(e.target.value);
-            setCharactersCount(messages.length)
+            setCharactersCount(messages.length);
           }}
           disabled={charactersCount >= 160}
         />
-        <Button className="mt-5 disabled:cursor-disabled" disabled={isPending || messages.length === 0 || charactersCount >= 160}>
+        <Button
+          className="disabled:cursor-disabled mt-5"
+          disabled={
+            isPending || messages.length === 0 || charactersCount >= 160
+          }
+        >
           Send Message
         </Button>
       </form>

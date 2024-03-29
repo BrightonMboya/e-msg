@@ -21,6 +21,7 @@ export const messages = createTRPCRouter({
     .input(
       z.object({
         message: z.string(),
+        organizationEmail: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -37,20 +38,52 @@ export const messages = createTRPCRouter({
         const options = {
           to: "+255788323254",
           message: input.message,
-          from: "Shamba Data",
+          from: "Barbershop",
         };
 
         const sms = AfricasTalking.SMS;
+        // const organizationsId = await ctx.db.organizations.findUnique({
+        //   where: {
+        //     email: input.organizationEmail,
+        //   },
+        //   select: {
+        //     id: true,
+        //     messageBalance: true
+        //   },
+        // });
+        // const recipients = await ctx.db.contacts.findMany({
+        //   where: {
+        //     organizationsId: organizationsId?.id,
+        //   },
+        //   select: {
+        //     id: true,
+        //     phoneNumber: true,
+        //   },
+        // });
 
-        const res = await sms.send({ ...options });
+        // for (const phoneNumber in recipients) {
+        //   const res = await sms.send({
+        //     ...options,
+        //     to: phoneNumber,
+        //   });
+        // }
+        // const totalCost = recipients.length * 50;
+        // const totalMessagesSent = recipients.length;
+
+        // reduce the totalMessages sent
+        // const messagesSent = await ctx.db.organizations.update({
+        //   where: {
+        //     id: organizationsId?.id
+        //   }, 
+        //   data: {
+        //     messageBalance: organizationsId?.messageBalance! - totalMessagesSent
+        //   }
+        // })
+
+        // const res = await sms.send({ ...options });
 
         // processing the res from the api
-        const correctStatusCode = ["100", "101", "102"];
-        if (res.SMSMessageData.Recipients.status in correctStatusCode) {
-          console.log("Yes Honey");
-        }
-        console.log(res);
-        console.log(res.SMSMessageData.Recipients);
+        // console.log(res.SMSMessageData.Recipients);
       } catch (cause) {
         console.log(cause);
       }
