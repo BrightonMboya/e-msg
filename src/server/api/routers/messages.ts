@@ -36,49 +36,50 @@ export const messages = createTRPCRouter({
         // Initialize the SDK
         const AfricasTalking = require("africastalking")(credentials);
         const options = {
-          to: "+255788323254",
           message: input.message,
           from: "Barbershop",
         };
 
         const sms = AfricasTalking.SMS;
-        // const organizationsId = await ctx.db.organizations.findUnique({
-        //   where: {
-        //     email: input.organizationEmail,
-        //   },
-        //   select: {
-        //     id: true,
-        //     messageBalance: true
-        //   },
-        // });
-        // const recipients = await ctx.db.contacts.findMany({
-        //   where: {
-        //     organizationsId: organizationsId?.id,
-        //   },
-        //   select: {
-        //     id: true,
-        //     phoneNumber: true,
-        //   },
-        // });
+        const organizationsId = await ctx.db.organizations.findUnique({
+          where: {
+            email: input.organizationEmail,
+          },
+          select: {
+            id: true,
+            messageBalance: true,
+          },
+        });
+        const recipients = await ctx.db.contacts.findMany({
+          where: {
+            organizationsId: organizationsId?.id,
+          },
+          select: {
+            id: true,
+            phoneNumber: true,
+          },
+        });
 
-        // for (const phoneNumber in recipients) {
-        //   const res = await sms.send({
-        //     ...options,
-        //     to: phoneNumber,
-        //   });
-        // }
-        // const totalCost = recipients.length * 50;
-        // const totalMessagesSent = recipients.length;
+        for (const phoneNumber of recipients) {
+          const res = await sms.send({
+            ...options,
+            to: phoneNumber.phoneNumber,
+          });
+        }
+        const totalCost = recipients.length * 50;
+        const totalMessagesSent = recipients.length;
 
         // reduce the totalMessages sent
-        // const messagesSent = await ctx.db.organizations.update({
-        //   where: {
-        //     id: organizationsId?.id
-        //   }, 
-        //   data: {
-        //     messageBalance: organizationsId?.messageBalance! - totalMessagesSent
-        //   }
-        // })
+        const messagesSent = await ctx.db.organizations.update({
+          where: {
+            id: organizationsId?.id
+          },
+          data: {
+            messageBalance: organizationsId?.messageBalance! - totalMessagesSent
+          }
+        })
+
+        console.log("Total Messages sent", messagesSent)
 
         // const res = await sms.send({ ...options });
 

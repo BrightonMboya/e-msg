@@ -65,11 +65,11 @@ export default function Page() {
       <h3 className="text-xl font-medium">Sending New Message</h3>
       <p>{`Messages Available: `}</p>
       <p>{`Message characters Limit ${charactersCount}/160`}</p>
-      <Controller
+      {/* <Controller
         control={control}
         name="alphanumeric"
         render={({ field }) => <OrganizationSelector field={field} />}
-      />
+      /> */}
       <form onSubmit={onSubmit}>
         <Textarea
           className="mt-5 max-w-xl"
@@ -78,13 +78,10 @@ export default function Page() {
             setMessages(e.target.value);
             setCharactersCount(messages.length);
           }}
-          disabled={charactersCount >= 160}
         />
         <Button
           className="disabled:cursor-disabled mt-5"
-          disabled={
-            isPending || messages.length === 0 || charactersCount >= 160
-          }
+          disabled={isPending || messages.length === 0 || charactersCount > 160}
         >
           Send Message
         </Button>

@@ -17,7 +17,7 @@ model Organizations {
     phoneNumber    String
     email          String     @unique
     messageBalance Int        @default(0)
-    alphaNumerics  String 
+    alphaNumerics  String
     messages       Messages[]
     contacts       Contacts[]
     Payments       Payments[]
@@ -34,7 +34,7 @@ model Messages {
 
 model Contacts {
     id              String        @id @default(cuid())
-    phoneNumber     String
+    phoneNumber     String        @unique
     Organizations   Organizations @relation(fields: [organizationsId], references: [id])
     organizationsId String
 }
