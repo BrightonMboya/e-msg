@@ -60,26 +60,36 @@ export const messages = createTRPCRouter({
           },
         });
 
-        for (const phoneNumber of recipients) {
+        // for (const phoneNumber of recipients) {
+        //   const res = await sms.send({
+        //     ...options,
+        //     to: phoneNumber.phoneNumber,
+        //   });
+        // }
+        const smsPromises = recipients.map(async (recipient) => {
           const res = await sms.send({
             ...options,
-            to: phoneNumber.phoneNumber,
+            to: recipient.phoneNumber,
           });
-        }
+        });
+
+        const res = await Promise.all(smsPromises)
+        console.log(res, "This should work pretty fast");
         const totalCost = recipients.length * 50;
         const totalMessagesSent = recipients.length;
 
         // reduce the totalMessages sent
         const messagesSent = await ctx.db.organizations.update({
           where: {
-            id: organizationsId?.id
+            id: organizationsId?.id,
           },
           data: {
-            messageBalance: organizationsId?.messageBalance! - totalMessagesSent
-          }
-        })
+            messageBalance:
+              organizationsId?.messageBalance! - totalMessagesSent,
+          },
+        });
 
-        console.log("Total Messages sent", messagesSent)
+        console.log("Total Messages sent", messagesSent);
 
         // const res = await sms.send({ ...options });
 
